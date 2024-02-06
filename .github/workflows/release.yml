@@ -35,10 +35,10 @@ jobs:
 
       - if: matrix.os == 'ubuntu-20.04'
         name: Build Linux
-        run: pnpm build:linux
+        run: pnpm release:linux
       - if: matrix.os == 'windows-latest'
         name: Build Windows
-        run: pnpm build:win
+        run: pnpm release:win
       - if: matrix.os == 'macos-latest'
         name: Build Mac
         run: pnpm build:mac
