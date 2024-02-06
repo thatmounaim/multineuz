@@ -46,5 +46,5 @@ jobs:
         name: Upload MacOS .App Artifacts
         uses: actions/upload-artifact@v2
         with:
-          path: dist/mac/Multi Neuz.app
-
+          path: | 
+           dist/mac/Multi Neuz.app
