@@ -1,0 +1,50 @@
+name: Build/release
+
+on: workflow_dispatch
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+jobs:
+  release:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-20.04, windows-latest]
+        node-version: [17]
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+
+      - name: Install PNPM <3
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm postinstall
+
+      - if: matrix.os == 'ubuntu-20.04'
+        name: Build Linux
+        run: pnpm build:linux
+      - if: matrix.os == 'windows-latest'
+        name: Build Windows
+        run: pnpm build:win
+      - if: matrix.os == 'macos-latest'
+        name: Build Mac
+        run: pnpm build:mac
+      - if: matrix.os == 'macos-latest'
+        name: Upload MacOS .App Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          path: dist/mac/Multi Neuz.app
+

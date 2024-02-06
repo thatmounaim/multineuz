@@ -1,0 +1,32 @@
+appId: com.multineuz
+productName: Multi Neuz
+directories:
+  buildResources: build
+files:
+  - '!**/.vscode/*'
+  - '!src/*'
+  - '!electron.vite.config.{js,ts,mjs,cjs}'
+  - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
+  - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
+  - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
+asarUnpack:
+  - resources/**
+win:
+  executableName: multi_neuz
+nsis:
+  artifactName: ${name}-${version}-setup.${ext}
+  shortcutName: ${productName}
+  uninstallDisplayName: ${productName}
+  createDesktopShortcut: always
+mac:
+  icon: 'resources/icon'
+  target: 'dir'
+  category: Games
+linux:
+  target:
+    - AppImage
+  category: Games
+  maintainer: thatmounaim
+appImage:
+  artifactName: ${name}-${version}.${ext}
+npmRebuild: false
