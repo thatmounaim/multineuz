@@ -18,13 +18,14 @@ An Electron WebView based Multi Client for Flyff Universe with Svelte and TypeSc
 
 ### Clone Project Repository
 ```bash
-$ git clone {repo_url}
+$ git clone https://github.com/thatmounaim/multineuz.git
 ```
 
 ### Install Dependencies
 
 ```bash
 $ pnpm install
+$ pnpm postinstall
 ```
 
 ### Build
@@ -45,6 +46,11 @@ $ pnpm build:linux
 The base of the project was generate with [electron-vite](https://electron-vite.org/) using the Svelte Template
 
 Some TS Warnings might appear in editor, found it okay to ignore, will give more importance to then in future.
+
+```bash
+# Run Devmode
+$ pnpm dev
+```
 
 ## Todo
 - Cleanup Renderer Code and Organise Into more components
