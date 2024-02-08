@@ -49,6 +49,10 @@ function createWindow(): void {
     globalShortcut.register('Control+Tab', () => {
       mainWindow.webContents.send('doTabbing')
     })
+
+    globalShortcut.register('F11', () => {
+      mainWindow.setFullScreen(!mainWindow.isFullScreen())
+    })
     // Prevent Accidental Exit on Windows
     globalShortcut.register('CommandOrControl+W', () => {
       console.log('Shortcut Disabled')
