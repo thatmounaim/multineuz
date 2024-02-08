@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, ipcMain, globalShortcut, Menu } from 'electron'
+import { app, shell, BrowserWindow, globalShortcut, Menu } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
@@ -19,8 +19,13 @@ function createWindow(): void {
     }
   })
 
-  const menu = Menu.buildFromTemplate([]);
-  Menu.setApplicationMenu(menu);
+  // Fix for MacOS Command Shortcuts
+  if (process.platform !== 'darwin') {
+    Menu.setApplicationMenu(null)
+  } else {
+    Menu.setApplicationMenu(Menu.buildFromTemplate([{ role: 'appMenu' }, { role: 'editMenu' }]))
+    mainWindow.setMenuBarVisibility(false)
+  }
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
@@ -34,6 +39,7 @@ function createWindow(): void {
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
+    mainWindow.webContents.openDevTools()
     mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
@@ -43,17 +49,9 @@ function createWindow(): void {
     globalShortcut.register('Control+Tab', () => {
       mainWindow.webContents.send('doTabbing')
     })
-
-    globalShortcut.register('CommandOrControl+R', () => {
-      console.log('CommandOrControl+R is pressed: Shortcut Disabled')
-    })
-
+    // Prevent Accidental Exit on Windows
     globalShortcut.register('CommandOrControl+W', () => {
-      console.log('CommandOrControl+W is pressed: Shortcut Disabled')
-    })
-
-    globalShortcut.register('CommandOrControl+I', () => {
-      console.log('CommandOrControl+I is pressed: Shortcut Disabled')
+      console.log('Shortcut Disabled')
     })
   })
 }
@@ -71,9 +69,6 @@ app.whenReady().then(() => {
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
   })
-
-  // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
 
   createWindow()
 
