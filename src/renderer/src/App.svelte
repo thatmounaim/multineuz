@@ -20,12 +20,16 @@
     activeClientTab = chars[0].id || ''
     window.electron.ipcRenderer.on('doTabbing', function () {
       if (lastActiveClientTab == '') return
-      const switchToTab = lastActiveClientTab
-      lastActiveClientTab = activeClientTab
-      activeClientTab = switchToTab
-      activeOverlay = ''
+      changeTab(lastActiveClientTab)
     })
   })
+
+  function changeTab(switchToTab: string) {
+    lastActiveClientTab = activeClientTab
+    activeClientTab = switchToTab
+    clients[activeClientTab].focous()
+    activeOverlay = ''
+  }
 
   function loadPreferences() {
     const lsPref = localStorage.getItem('preferences')
@@ -65,11 +69,7 @@
     <div class="flex items-center flex-1 p-2 gap-3">
       {#each chars as char}
         <button
-          on:click={() => {
-            lastActiveClientTab = activeClientTab
-            activeClientTab = char.id
-            activeOverlay = ''
-          }}
+          on:click={() => changeTab(char.id)}
           class="p-1 px-3 {activeClientTab == char.id
             ? 'bg-neutral-950'
             : 'bg-white/20'} rounded flex gap-2 items-center"
