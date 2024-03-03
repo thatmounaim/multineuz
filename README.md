@@ -11,6 +11,10 @@ An Electron WebView based Multi Client for Flyff Universe with Svelte and TypeSc
     - Community Shortcuts for The Browser
         - Flyffipedia
         - Flyffulator
+        - SiegeStats
+     
+## Note
+The project will undergo a full rewrite in the near future, appologies for lack of updates and quality of life improvements.
 ## Download Pre-compiled
 
 [View Latest Releases](https://github.com/thatmounaim/multineuz/releases)
@@ -50,13 +54,4 @@ Some TS Warnings might appear in editor, found it okay to ignore, will give more
 ```bash
 # Run Devmode
 $ pnpm dev
-```
-
-## Todo
-- Cleanup Renderer Code and Organise Into more components
-- Figure out a fix for the browser Back/Forward buttons
-- Add Comments to the Code
-- Auto Updater in Future Versions
-- Build in Tools :
-    - Pet Food Calculator
-    - Pet Cost Calculator
+```or
