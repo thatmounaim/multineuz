@@ -6,6 +6,7 @@ An Electron WebView based Multi Client for Flyff Universe with Svelte and TypeSc
 ## Features
 - Multi Session Management with Unique Session for Each Character
 - Ctrl + Tab for Fast Swapping Between Characters
+- Fullscreen With F12
 - Integrated Mini Browser Overlay
     - Default Homepage : DuckDuckGo
     - Community Shortcuts for The Browser
@@ -14,7 +15,7 @@ An Electron WebView based Multi Client for Flyff Universe with Svelte and TypeSc
         - SiegeStats
      
 ## Note
-The project will undergo a full rewrite in the near future, appologies for lack of updates and quality of life improvements.
+I'm currently on a break from Flyff. Once I'm back, I'll resume working on the project. Following that, the project will undergo a full rewrite. I apologize for the lack of updates and improvements.
 ## Download Pre-compiled
 
 [View Latest Releases](https://github.com/thatmounaim/multineuz/releases)
@@ -54,4 +55,4 @@ Some TS Warnings might appear in editor, found it okay to ignore, will give more
 ```bash
 # Run Devmode
 $ pnpm dev
-```or
+```
