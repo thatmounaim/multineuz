@@ -16,6 +16,8 @@ An Electron WebView based Multi Client for Flyff Universe with Svelte and TypeSc
      
 ## Note
 I'm currently on a break from Flyff. Once I'm back, I'll resume working on the project. Following that, the project will undergo a full rewrite. I apologize for the lack of updates and improvements.
+
+Feel free to Join Discord for Questions and Help : https://discord.gg/PJkJABKUb
 ## Download Pre-compiled
 
 [View Latest Releases](https://github.com/thatmounaim/multineuz/releases)
