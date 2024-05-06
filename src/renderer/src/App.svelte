@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { Globe, Settings, X } from 'lucide-svelte'
+  import { Eye, EyeOff, Globe, Settings, X } from 'lucide-svelte'
   import BrowserComponent from './components/BrowserComponent.svelte'
   import SettingsComponent from './components/SettingsComponent.svelte'
   import type { Character } from './characterutils'
@@ -13,7 +13,7 @@
   let chars: Character[] = []
   let clients: Record<string, NeuzClientComponent> = {}
   let preferences: Preferences = defaultPreferences
-
+  let hideTaskBar: boolean = false
   onMount(() => {
     loadPreferences()
     loadCharacters()
@@ -42,57 +42,80 @@
   }
 </script>
 
-<div class="w-full h-full flex flex-col overflow-hidden">
-  <div class="flex bg-neutral-800 text-white font-semibold items-center">
-    <div class="items-center flex">
-      <button
-        on:click={() => {
-          activeOverlay = activeOverlay == 'settings' ? '' : 'settings'
-        }}
-        class="p-3.5 hover:bg-black/20 duration-200 border-r border-r-white/10"
-        class:bg-neutral-950={activeOverlay == 'settings'}><Settings /></button
-      >
+<div class="w-full h-full flex flex-col" class:overflow-hidden={!hideTaskBar}>
+  {#if hideTaskBar && activeOverlay == ''}
+    <div class="fixed z-[100] right-0 top-0 flex p-2">
+      <div class="flex items-center text-white">
+        <button
+          class="p-0.5 bg-neutral-800 hover:bg-neutral-600 duration-200 rounded-md"
+          on:click={() => (hideTaskBar = !hideTaskBar)}
+        >
+          <Eye />
+        </button>
+      </div>
     </div>
-
-    {#if preferences.browser.enabled}
+  {:else}
+    <div class="flex bg-neutral-800 text-white font-semibold items-center">
       <div class="items-center flex">
         <button
-          class="p-3.5 hover:bg-black/20 duration-200 border-r border-r-white/10"
-          class:bg-neutral-950={activeOverlay == 'browser'}
           on:click={() => {
-            activeOverlay = activeOverlay == 'browser' ? '' : 'browser'
-          }}><Globe /></button
+            activeOverlay = activeOverlay == 'settings' ? '' : 'settings'
+          }}
+          class="p-3.5 hover:bg-black/20 duration-200 border-r border-r-white/10"
+          class:bg-neutral-950={activeOverlay == 'settings'}><Settings /></button
         >
       </div>
-    {/if}
 
-    <div class="flex items-center flex-1 p-2 gap-3">
-      {#each chars as char}
-        <button
-          on:click={() => changeTab(char.id)}
-          class="p-1 px-3 {activeClientTab == char.id
-            ? 'bg-neutral-950'
-            : 'bg-white/20'} rounded flex gap-2 items-center"
-        >
-          <img class="w-4" src="jobs/{char.job}.png?asset" alt={char.job} />
-          <strong class="px-2">{char.label}</strong>
-          {#if clients[char.id]?.isStarted()}
-            <button
-              on:click={(e) => {
-                clients[char.id]?.stopClient()
-                e.stopPropagation()
-              }}
-              class="p-0.5 bg-white/10 hover:bg-white/20 duration-200 rounded-md"
-            >
-              <X class="w-4 h-4 roudned" />
-            </button>
-          {:else}
-            <span class="w-5"></span>
-          {/if}
-        </button>
-      {/each}
+      {#if preferences.browser.enabled}
+        <div class="items-center flex">
+          <button
+            class="p-3.5 hover:bg-black/20 duration-200 border-r border-r-white/10"
+            class:bg-neutral-950={activeOverlay == 'browser'}
+            on:click={() => {
+              activeOverlay = activeOverlay == 'browser' ? '' : 'browser'
+            }}><Globe /></button
+          >
+        </div>
+      {/if}
+
+      <div class="flex items-center flex-1 p-2 gap-3">
+        {#each chars as char}
+          <button
+            on:click={() => changeTab(char.id)}
+            class="p-1 px-3 {activeClientTab == char.id
+              ? 'bg-neutral-950'
+              : 'bg-white/20'} rounded flex gap-2 items-center"
+          >
+            <img class="w-4" src="jobs/{char.job}.png?asset" alt={char.job} />
+            <strong class="px-2">{char.label}</strong>
+            {#if clients[char.id]?.isStarted()}
+              <button
+                on:click={(e) => {
+                  clients[char.id]?.stopClient()
+                  e.stopPropagation()
+                }}
+                class="p-0.5 bg-white/10 hover:bg-white/20 duration-200 rounded-md"
+              >
+                <X class="w-4 h-4 roudned" />
+              </button>
+            {:else}
+              <span class="w-5"></span>
+            {/if}
+          </button>
+        {/each}
+      </div>
+      {#if activeOverlay == ''}
+        <div class="flex items-center p-2 gap-3">
+          <button
+            class="p-0.5 bg-white/10 hover:bg-white/20 duration-200 rounded-md"
+            on:click={() => (hideTaskBar = !hideTaskBar)}
+          >
+            <EyeOff />
+          </button>
+        </div>
+      {/if}
     </div>
-  </div>
+  {/if}
   <div class="flex flex-col bg-neutral-700 flex-1 relative">
     {#each chars as char}
       <div class="absolute left-0 w-full h-full" class:hidden={activeClientTab != char.id}>
