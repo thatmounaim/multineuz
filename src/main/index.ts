@@ -59,7 +59,7 @@ function createWindow(): void {
     })
   })
 
-  ipcMain.on('clearCache', async function (event, sid: string) {
+  ipcMain.on('clearCache', async function (_, sid: string) {
     await session.fromPartition('persist:' + sid).clearCache()
   })
 }
