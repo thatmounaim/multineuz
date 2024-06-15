@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, globalShortcut, Menu } from 'electron'
+import { app, shell, BrowserWindow, globalShortcut, Menu, ipcMain, session } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
@@ -57,6 +57,10 @@ function createWindow(): void {
     globalShortcut.register('CommandOrControl+W', () => {
       console.log('Shortcut Disabled')
     })
+  })
+
+  ipcMain.on('clearCache', async function (event, sid: string) {
+    await session.fromPartition('persist:' + sid).clearCache()
   })
 }
 

@@ -2,6 +2,7 @@
   import {
     ChevronDown,
     ChevronUp,
+    DatabaseZap,
     Edit,
     Globe,
     Minus,
@@ -58,6 +59,10 @@
   function savePreferences() {
     localStorage.setItem('preferences', JSON.stringify(preferences))
     dispatch('saved_preferences')
+  }
+
+  function clearCache(sid: string) {
+    window.electron.ipcRenderer.send('clearCache', sid)
   }
 </script>
 
@@ -287,6 +292,11 @@
                       }}
                       class="px-2 py-1 bg-black/10 hover:bg-black/20 disabled:opacity-10"
                       ><Trash class="w-4" /></button
+                    >
+                    <button
+                      on:click={() => clearCache(chars[index].id)}
+                      class="flex items-center gap-2 px-2 py-1 bg-black/10 hover:bg-black/20 disabled:opacity-10"
+                      ><DatabaseZap class="w-4" /> <small>Clear Cache</small></button
                     >
                   </div>
                 </div>
