@@ -1,8 +1,11 @@
-# MultiNeuz
+# End of Life
 
-![alt text](resources/icon.png "MultiNeuz")
+Find a New Client project at: https://github.com/thatmounaim/neuzos
+
+## MultiNeuz
 
 An Electron WebView based Multi Client for Flyff Universe with Svelte and TypeScript
+
 ## Features
 - Multi Session Management with Unique Session for Each Character
 - Ctrl + Tab for Fast Swapping Between Characters
@@ -14,10 +17,6 @@ An Electron WebView based Multi Client for Flyff Universe with Svelte and TypeSc
         - Flyffulator
         - SiegeStats
      
-## Note
-I'm currently on a break from Flyff. Once I'm back, I'll resume working on the project. Following that, the project will undergo a full rewrite. I apologize for the lack of updates and improvements.
-
-Feel free to Join Discord for Questions and Help : https://discord.gg/PJkJABKUbZ
 ## Download Pre-compiled
 
 [View Latest Releases](https://github.com/thatmounaim/multineuz/releases)
